@@ -1,0 +1,17 @@
+package com.teamone.dao;
+
+import com.teamone.entity.Bigmoney;
+
+public interface BigmoneyMapper {
+    int deleteByPrimaryKey(Long billId);
+
+    int insert(Bigmoney record);
+
+    int insertSelective(Bigmoney record);
+
+    Bigmoney selectByPrimaryKey(Long billId);
+
+    int updateByPrimaryKeySelective(Bigmoney record);
+
+    int updateByPrimaryKey(Bigmoney record);
+}

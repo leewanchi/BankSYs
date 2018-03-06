@@ -1,0 +1,31 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>柜员操作首页</title>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <%@include file="/WEB-INF/common/head.jsp" %>
+</head>
+<body>
+ <!--    页面顶部 -->
+    <%@include file="/WEB-INF/common/top.jsp" %>
+    <div class="container-fluid all">       <!-- 左侧边 -->       
+           <%@include file="/WEB-INF/common/sidebar.jsp" %>       
+        <div class="maincontent row">
+			<section class="content-header"> 
+				<h2> 
+					Home Page 
+					<small>Welcome to the banking system</small> 
+				</h2> 
+			</section> 
+        </div>
+    </div>
+    <a href="#top" id="goTop"><i class="fa fa-angle-up fa-3x"></i></a>
+    <%@include file="../common/authModal.jsp"%>
+</body>
+</html>

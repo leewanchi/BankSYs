@@ -1,0 +1,93 @@
+package com.teamone.controller;
+
+import com.alibaba.fastjson.JSONObject;
+import com.teamone.dto.AjaxResult;
+import com.teamone.dto.PermissionExcution;
+import com.teamone.entity.Role;
+import com.teamone.sevice.RoleService;
+import com.teamone.utils.Log4jUtil;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.List;
+
+/**
+ * Created by kay on 2017/8/3.
+ * 角色管理
+ */
+@Controller
+@RequestMapping("role")
+public class RoleController {
+
+    @Autowired
+    private RoleService roleService;
+
+    @RequestMapping("/list")
+    public String roleIndex(Model model){
+        List<Role> roleList= roleService.queryRoles();
+        model.addAttribute("roleList",roleList);
+        return "rolemana";
+    }
+
+
+    //添加角色
+    @RequestMapping(value ="/add",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String addRole(HttpServletRequest request){
+    	//Log4jUtil.loadingLog4j();
+		//Log4jUtil.log.warn("用户执行了添加角色操作");
+        JSONObject obj =new JSONObject();
+        AjaxResult result;
+        String roleName=request.getParameter("roleName");
+        String description=request.getParameter("description");
+        if (null == roleName || null == description || roleName.equals("") || description.equals("")) {
+            result=new AjaxResult(false,"输入为空");
+            obj.put("data",result);
+            return obj.toJSONString();
+        }
+        roleService.createRole(roleName,description);
+        result=new AjaxResult(true,"角色添加成功");
+        obj.put("data",result);
+        return obj.toJSONString();
+    }
+
+    //删除角色
+    @RequestMapping(value ="/delete/{roleId}",method = RequestMethod.POST,produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String addRole(@PathVariable("roleId") Long roleId){
+    	//Log4jUtil.loadingLog4j();
+		//Log4jUtil.log.warn("用户执行了删除角色操作");
+       JSONObject obj =new JSONObject();
+       int count= roleService.deleteRole(roleId);
+        AjaxResult result=new AjaxResult(true,"操作成功");
+        obj.put("data",result);
+        return obj.toJSONString();
+    }
+
+    /**
+     * todo 给角色分配权限
+     * @param roleId     角色ID
+
+     * @return
+     */
+    @RequestMapping(value = "/setPermissions/{roleId}",method = RequestMethod.POST,produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public String setPermissions(@PathVariable("roleId") Long roleId,@RequestBody String permissionIds){
+        JSONObject obj =new JSONObject();
+       //建立角色-权限关联
+        System.out.println("---------------建立角色-权限关联-----------------");
+        System.out.println(permissionIds);
+        PermissionExcution excution=roleService.createRolePermissions(roleId,permissionIds);
+       AjaxResult result=new AjaxResult(excution,true);
+       obj.put("result",result);
+       return obj.toJSONString();
+    }
+
+
+
+}

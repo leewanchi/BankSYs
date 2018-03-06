@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.teamone.dao.LogMapper" >
+  <resultMap id="BaseResultMap" type="com.teamone.entity.Log" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="in_account" property="inAccount" jdbcType="VARCHAR" />
+    <result column="out_account" property="outAccount" jdbcType="VARCHAR" />
+    <result column="trade_type" property="tradeType" jdbcType="INTEGER" />
+    <result column="trade_date" property="tradeDate" jdbcType="DATE" />
+    <result column="trade_money" property="tradeMoney" jdbcType="DECIMAL" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, in_account, out_account, trade_type, trade_date, trade_money, currency
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.teamone.entity.Log" >
+    insert into log (id, in_account, out_account, 
+      trade_type, trade_date, trade_money, 
+      currency)
+    values (#{id,jdbcType=INTEGER}, #{inAccount,jdbcType=VARCHAR}, #{outAccount,jdbcType=VARCHAR}, 
+      #{tradeType,jdbcType=INTEGER}, #{tradeDate,jdbcType=DATE}, #{tradeMoney,jdbcType=DECIMAL}, 
+      #{currency,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.teamone.entity.Log" >
+    insert into log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="inAccount != null" >
+        in_account,
+      </if>
+      <if test="outAccount != null" >
+        out_account,
+      </if>
+      <if test="tradeType != null" >
+        trade_type,
+      </if>
+      <if test="tradeDate != null" >
+        trade_date,
+      </if>
+      <if test="tradeMoney != null" >
+        trade_money,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="inAccount != null" >
+        #{inAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="outAccount != null" >
+        #{outAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=INTEGER},
+      </if>
+      <if test="tradeDate != null" >
+        #{tradeDate,jdbcType=DATE},
+      </if>
+      <if test="tradeMoney != null" >
+        #{tradeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.teamone.entity.Log" >
+    update log
+    <set >
+      <if test="inAccount != null" >
+        in_account = #{inAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="outAccount != null" >
+        out_account = #{outAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null" >
+        trade_type = #{tradeType,jdbcType=INTEGER},
+      </if>
+      <if test="tradeDate != null" >
+        trade_date = #{tradeDate,jdbcType=DATE},
+      </if>
+      <if test="tradeMoney != null" >
+        trade_money = #{tradeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.teamone.entity.Log" >
+    update log
+    set in_account = #{inAccount,jdbcType=VARCHAR},
+      out_account = #{outAccount,jdbcType=VARCHAR},
+      trade_type = #{tradeType,jdbcType=INTEGER},
+      trade_date = #{tradeDate,jdbcType=DATE},
+      trade_money = #{tradeMoney,jdbcType=DECIMAL},
+      currency = #{currency,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

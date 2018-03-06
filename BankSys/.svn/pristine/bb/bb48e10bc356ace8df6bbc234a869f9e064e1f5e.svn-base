@@ -1,0 +1,70 @@
+
+var bank={
+    URL:{
+        /**
+         *
+         *主要业务模块
+         */
+        transfer:function() {
+            return "/account/transfer";
+        },
+        checkaccount:function() {
+            return "/account/checkaccount";
+        },
+        deposit:function() {
+            return "/account/deposit";
+        },
+        withdrawal:function() {
+            return "/account/withdrawal";
+        },
+        searchSysLog:function() {
+            return "/sys/queryLog";
+        },
+        /**
+         *
+         * manager模块
+         */
+        managerIndex:function() {
+            return "/teller/index";
+        },
+        freezeUser:function(){
+        	return "/teller/freezeTeller"+userId;
+        },
+        unFreezeUser:function(){
+        	return "/teller/unFreezeTeller"+userId;
+        },
+        managerAuth:function() {
+            return "/teller/authorization";
+        },
+        /**
+         * admin:
+         * User模块
+         */
+        addUser:function() {
+            return "/user/add";
+        },
+        deleteUser:function(userId) {
+            return "/user/delete"+userId;
+        },
+        userList:function() {
+            return "/user/userList";
+        },
+        /**
+         * admin:
+         * role模块
+         */
+        roleList:function() {
+            return "/role/list";
+        },
+        addRole:function() {
+            return "/role/add";
+        },
+        deleteRole:function(roleId) {
+            return "role/delete/"+roleId;
+        },
+        setPermissions:function(roleId) {
+            return "role/setPermissions"+roleId;
+        }
+        
+    }
+};

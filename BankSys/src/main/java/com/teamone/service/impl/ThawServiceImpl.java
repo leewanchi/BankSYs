@@ -1,0 +1,93 @@
+package com.teamone.service.impl;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.teamone.dao.CustomMapper;
+import com.teamone.dao.Frozen_accountMapper;
+import com.teamone.dao.UserMapper;
+import com.teamone.dto.AjaxResult;
+import com.teamone.entity.Frozen_account;
+import com.teamone.entity.User;
+import com.teamone.sevice.IThawService;
+
+
+@Service
+public class ThawServiceImpl implements IThawService{
+
+	@Autowired
+	private UserMapper usermapper;
+	@Autowired
+	private CustomMapper custommapper;
+	@Autowired
+	private Frozen_accountMapper frozen_acoountmapper;
+	
+	private AjaxResult<String> result;
+	private static final Integer NORMAL=1;//正常
+	private static final Integer FROST=0;//冻结
+	
+	@Override
+	public AjaxResult<String> userFreeze(Integer userId) {
+		// TODO Auto-generated method stub
+		User user = usermapper.selectByPrimaryKey(userId);
+		if(user!=null){
+			user.setStatus(FROST);
+			usermapper.updateByPrimaryKey(user);
+			Frozen_account frozen_account = new Frozen_account(Integer.toString(userId),5);
+			frozen_acoountmapper.updateByPrimaryKeySelective(frozen_account);
+			result = new AjaxResult<String>(true, "冻结完成");
+			return result;
+		}
+		result = new AjaxResult<String>(false, "冻结失败，未找到此柜员");
+		return result;
+	}
+
+	@Override
+	public AjaxResult<String> userThaw(Integer userId) {
+		// TODO Auto-generated method stub
+		User user = usermapper.selectByPrimaryKey(userId);
+		//System.out.println("-------id---------"+userId);
+		if(user!=null){
+			user.setStatus(NORMAL);
+			usermapper.updateByPrimaryKey(user);
+			Frozen_account frozen_account = new Frozen_account(Integer.toString(userId),0);
+			frozen_acoountmapper.updateByPrimaryKeySelective(frozen_account);
+			//System.out.println("-------------------"+user.getUserName());
+			frozen_acoountmapper.deleteByPrimaryKey(user.getUserName());
+			result = new AjaxResult<String>(true, "解冻完成");
+			return result;
+		}
+		result = new AjaxResult<String>(false, "解冻失败，未找到此柜员");
+		return result;
+	}
+
+	@Override
+	 public List<User> getAllUser() {
+		  return usermapper.getAllUsers();
+    }
+	
+	
+	
+	
+	/**
+	 * @author vnbuser
+	 *银行卡冻结
+	 */
+//	@Override
+//	public boolean CustomThaw(String cardId,String Id) {
+//		// TODO Auto-generated method stub
+//		Custom custom = custommapper.selectBycardIdAndId(cardId, Id);
+//		if(custom!=null){
+//			custom.setStatus(NORMAL);
+//			custommapper.updateByPrimaryKeySelective(custom);
+//			Frozen_account frozen_account = new Frozen_account(cardId,0);
+//			frozen_acoountmapper.updateByPrimaryKeySelective(frozen_account);
+//			return true;
+//		}
+//		return false;
+//	}
+	
+}

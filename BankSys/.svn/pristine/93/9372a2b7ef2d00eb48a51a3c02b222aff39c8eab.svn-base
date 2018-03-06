@@ -1,0 +1,150 @@
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<div class="sidebar">
+    <ul class="nav">
+        <li ><a href="${pageContext.request.contextPath}/bank/index">主页面</a></li>
+        <li class="has-sub">
+            <a href="javascript:void(0);"><span>银行业务</span><i class="fa fa-caret-right fa-fw pull-right"></i></a>
+            <ul class="sub-menu">
+                <li><a id="deposit" ><i class="fa fa-circle-o fa-fw"></i>&nbsp;存款业务</a></li>
+                <li><a id="withdrawal"><i class="fa fa-circle-o fa-fw"></i>&nbsp;取款业务</a></li>
+                <li><a id="transfer" ><i class="fa fa-circle-o fa-fw"></i>&nbsp;转账业务</a></li>
+            </ul>
+        </li>
+        <li class="has-sub">
+            <a href="javascript:void(0);"><span>查询业务</span><i class="fa fa-caret-right fa-fw pull-right"></i></a>
+            <ul class="sub-menu">
+                <li><a id="checkaccount"><i class="fa fa-circle-o fa-fw"></i>&nbsp;账户信息</a></li>
+                <li><a href="left3.html"><i class="fa fa-circle-o fa-fw"></i>&nbsp;交易明细</a></li>
+            </ul>
+        </li>
+        <!--todo 经理模块 -->
+       
+        <li class="has-sub"><a href="javascript:void(0);"><span>经理业务</span><i
+                class="fa fa-caret-right fa-fw pull-right"></i></a>
+            <ul class="sub-menu">
+                <li><a id="managerIndex" ><i class="fa fa-circle-o fa-fw"></i>&nbsp;柜员管理</a></li>
+
+                <li><a id="managerAuth" ><i class="fa fa-circle-o fa-fw"></i>&nbsp;授权管理</a></li>
+            </ul>
+        </li>
+       
+       
+            <!--todo 管理员模块 -->
+            <li class="has-sub"><a href="javascript:void(0);"><span>管理员业务</span><i
+                    class="fa fa-caret-right fa-fw pull-right"></i></a>
+                <ul class="sub-menu">
+                    <li><a id="usermana"><i
+                            class="fa fa-circle-o fa-fw"></i>&nbsp;用户管理</a></li>
+                    <li><a id="rolemana" href="javascript:void(0);"><i
+                            class="fa fa-circle-o fa-fw"></i>&nbsp;角色管理</a></li>
+                    <li><a  id="systemlog" ><i
+                            class="fa fa-circle-o fa-fw"></i>&nbsp;系统日志</a></li>
+                </ul>
+            </li>
+       
+    </ul>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="authModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">消息提示：</h4>
+            </div>
+            <div class="modal-body">
+                <p>您没有权限访问！</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        /**
+         * 将超链接转换成 ajax的请求发送，用于权限的检查
+         * @param url
+         */
+        function ajaxHref(url){
+            $.ajax({
+                type : 'GET',
+                url : "${pageContext.request.contextPath}"+url,
+                async : false,
+                success:function(){
+                    window.location.href="${pageContext.request.contextPath}"+url;
+                },
+                fial:function () {
+                    alert("fail");
+                }
+            });
+        }
+        /**
+         * 修改ajax对401状态的处理
+         */
+        $.ajaxSetup({
+            cache:false,
+            error : function(XMLHttpRequest, textStatus,errorThrown) {
+                switch (XMLHttpRequest.status){
+                    case(401):
+                        $("#authModal").modal();
+                        break;
+                    case(200):
+                        break;
+                    default:
+                        alert("网络已断开");
+                }
+            }
+        });
+
+        $("#transfer").click(function() {
+            ajaxHref(bank.URL.transfer());
+        });
+
+        $("#deposit").click(function() {
+            ajaxHref(bank.URL.deposit());
+        });
+
+        $("#withdrawal").click(function() {
+            ajaxHref(bank.URL.withdrawal());
+        });
+
+
+        $('#managerAuth').click(function() {
+            ajaxHref(bank.URL.managerAuth());
+
+        });
+
+        $('#managerIndex').click(function() {
+            ajaxHref(bank.URL.managerIndex());
+        });
+
+        $('#Freeze').click(function(){
+        	ajaxHref(bank.URL.freezeUser());
+        });
+        
+        $('#unFreeze').click(function(){
+        	ajaxHref(bank.URL.unFreezeUser());
+        });
+        
+        $('#systemlog').click(function() {
+            ajaxHref(bank.URL.searchSysLog());
+        });
+
+
+        $("#usermana").click(function() {
+            ajaxHref(bank.URL.userList());
+        });
+
+        $("#rolemana").click(function() {
+            ajaxHref(bank.URL.roleList());
+        });
+
+    });
+</script>

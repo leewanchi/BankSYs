@@ -1,0 +1,11 @@
+.fa-logout {
+	display:inline-block; 
+	font-size:18px;
+	font-family:楷体;
+	
+}
+.fa-label {
+	font-size:23px;
+	font-family:楷体;
+	
+}

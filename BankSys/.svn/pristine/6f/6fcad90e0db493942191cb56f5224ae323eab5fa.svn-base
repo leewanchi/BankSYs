@@ -1,0 +1,20 @@
+log4j.rootLogger=warn,stdout,file,jdbc
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target=System.out
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=[%p][%d{yyyy-MM-dd HH:mm:ss}] %l %m %n 
+
+log4j.appender.file=org.apache.log4j.FileAppender
+log4j.appender.file.File=d:/sys_log.log
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=[%p][%d{yyyy-MM-dd HH:mm:ss}] %l %m %n 
+
+log4j.appender.jdbc=org.apache.log4j.jdbc.JDBCAppender
+log4j.appender.jdbc.BufferSize=1
+log4j.appender.jdbc.driver=com.mysql.jdbc.Driver
+log4j.appender.jdbc.URL=jdbc:mysql://www.zhuangmh.cn:3306/team1?useUnicode=true&characterEncoding=utf8
+log4j.appender.jdbc.user=john
+log4j.appender.jdbc.password=aaa155329431
+log4j.appender.jdbc.layout=org.apache.log4j.PatternLayout
+log4j.appender.jdbc.layout.ConversionPattern=INSERT INTO sys_log(createDate,method, message) values('%d{yyyy-MM-dd HH:mm:ss}', '%l', '%m')
+

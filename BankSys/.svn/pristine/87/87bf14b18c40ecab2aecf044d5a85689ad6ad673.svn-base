@@ -1,0 +1,4 @@
+jdbc_driver=com.mysql.jdbc.Driver
+jdbc_url=jdbc:mysql://www.zhuangmh.cn:3306/team1?useUnicode=true&characterEncoding=utf8
+jdbc_username=john
+jdbc_password=aaa155329431

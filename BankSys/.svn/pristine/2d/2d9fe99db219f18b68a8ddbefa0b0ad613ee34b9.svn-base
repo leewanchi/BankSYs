@@ -1,0 +1,162 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>柜员用户管理</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <%@include file="/WEB-INF/common/head.jsp" %>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/pager.js"></script>
+    <link href="${pageContext.request.contextPath}/static/css/pager.css" rel="stylesheet" />
+    <script type="text/javascript">
+	    function checktable(){
+	    	$("#tableinfo").css("display","block");
+	    }
+    </script>
+</head>
+<body>
+    <!-- 页面顶部 -->
+    <%@include file="/WEB-INF/common/top.jsp" %>
+    <div class="container-fluid all">
+       <!-- 左侧边 -->
+		<div class="sidebar">
+			<ul class="nav">
+				<li><a href="index.action">主页面</a></li>
+				<li class="has-sub"><a href="javascript:void(0);"><span>银行业务</span><i
+						class="fa fa-caret-right fa-fw pull-right"></i></a>
+					<ul class="sub-menu">
+						<li><a href="deposit.action"><i
+								class="fa fa-circle-o fa-fw"></i>&nbsp;存款业务</a></li>
+						<li><a href="withdrawal.action"><i
+								class="fa fa-circle-o fa-fw"></i>&nbsp;取款业务</a></li>
+						<li><a href="transfer.action"><i
+								class="fa fa-circle-o fa-fw"></i>&nbsp;转账业务</a></li>
+					</ul>
+				</li>
+				<li class="has-sub"><a href="javascript:void(0);"><span>查询业务</span><i
+						class="fa fa-caret-right fa-fw pull-right"></i></a>
+					<ul class="sub-menu">
+						<li><a href="checkaccount.action"><i
+								class="fa fa-circle-o fa-fw"></i>&nbsp;账户信息</a></li>
+						<li><a href="trandetail.action"><i
+								class="fa fa-circle-o fa-fw"></i>&nbsp;交易明细</a></li>
+					</ul>
+				</li>
+				<li class="has-sub"><a href="javascript:void(0);"><span>经理业务</span><i
+						class="fa fa-caret-right fa-fw pull-right"></i></a>
+					<ul class="sub-menu">
+						<li><a href="manager.action"><i
+								class="fa fa-circle-o fa-fw"></i>&nbsp;柜员管理</a></li>
+						<li><a href="authorization.action"><i
+								class="fa fa-circle-o fa-fw"></i>&nbsp;授权管理</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="maincontent row">
+			<section class="content-header"> 
+				<h2> 
+					Confirm authorization  
+					<small></small> 
+				</h2> 
+			</section> 
+			<section class="content container-fluid">
+			<div class="table-responsive">
+				<table class="table" >
+					<caption>需授权信息表</caption>
+					<thead >
+						<tr>
+							<th>转出账户</th>
+							<th>转入账户</th>
+							<th>交易类型</th>
+							<th>交易金额</th>
+							<th>操作柜员</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>6215983010200053280</td>
+							<td>
+								<c:if test="true"><span>6215983010200053281</span></c:if>
+								<c:if test="false"><span>---</span></c:if>
+							</td>
+							<td>
+								<c:if test="true"><span>转账</span></c:if>
+								<c:if test="false"><span>存款</span></c:if>
+								<c:if test="false"><span>取款</span></c:if>
+							</td>
+							<td>20,0000</td>
+							<td>12</td>
+							<td>
+								<c:if test="false">已授权</c:if>
+								<c:if test="true"><a href="#" style="text-decoration: none;">同意</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" style="text-decoration: none;">不同意</a></c:if>
+							</td>
+						</tr>
+						<tr>
+							<td>6215983010200053280</td>
+							<td>
+								<c:if test="false"><span></span></c:if>
+								<c:if test="true"><span>---</span></c:if>
+							</td>
+							<td><c:if test="false"><span>转账</span></c:if>
+								<c:if test="true"><span>存款</span></c:if>
+								<c:if test="false"><span>取款</span></c:if>
+							</td>
+							<td>20,0000</td>
+							<td>12</td>
+							<td>
+								<c:if test="true">已授权</c:if>
+								<c:if test="false"><a href="#" style="text-decoration: none;">同意</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" style="text-decoration: none;">不同意</a></c:if>
+							</td>
+						</tr>
+						<tr>
+							<td>6215983010200053280</td>
+							<td>
+								<c:if test="false"><span></span></c:if>
+								<c:if test="true"><span>---</span></c:if>
+							</td>
+							<td><c:if test="false"><span>转账</span></c:if>
+								<c:if test="false"><span>存款</span></c:if>
+								<c:if test="true"><span>取款</span></c:if>
+							</td>
+							<td>20,0000</td>
+							<td>12</td>
+							<td>
+								<c:if test="false">已授权</c:if>
+								<c:if test="true"><a href="#" style="text-decoration: none;">同意</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" style="text-decoration: none;">不同意</a></c:if>
+							</td>
+						</tr>
+						<tr>
+							<td>6215983010200053280</td>
+							<td>
+								<c:if test="true"><span>6215983010200053281</span></c:if>
+								<c:if test="false"><span>---</span></c:if>
+								<c:if test="false"><span>---</span></c:if>
+							</td>
+							<td><c:if test="true"><span>转账</span></c:if>
+								<c:if test="false"><span>存款</span></c:if>
+								<c:if test="false"><span>取款</span></c:if>
+							</td>
+							<td>20,0000</td>
+							<td>12</td>
+							<td>
+								<c:if test="false">已授权</c:if>
+								<c:if test="true"><a href="#" style="text-decoration: none;">同意</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" style="text-decoration: none;">不同意</a></c:if>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div style="text-align: center">
+				<div class="pager"></div>
+			</div>
+			</section>
+        </div>
+    </div>
+    <a href="#top" id="goTop"><i class="fa fa-angle-up fa-3x"></i></a>
+</body>
+</html>

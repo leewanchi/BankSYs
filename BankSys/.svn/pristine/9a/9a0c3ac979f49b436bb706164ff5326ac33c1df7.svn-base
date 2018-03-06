@@ -1,0 +1,16 @@
+package com.teamone.sevice;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
+import com.teamone.dto.AjaxResult;
+import com.teamone.entity.Custom;
+public interface ICustomService {
+	AjaxResult<String> CustomLogin(String cardId,String password) 
+			throws NoSuchAlgorithmException, UnsupportedEncodingException;
+
+	Custom selectCustomById(String cardId);
+
+	//Custom checkAccount(String cardId);
+	
+}

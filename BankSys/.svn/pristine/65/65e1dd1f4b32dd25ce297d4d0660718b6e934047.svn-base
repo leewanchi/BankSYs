@@ -1,0 +1,46 @@
+ function checktable(){
+    	$("#tableinfo").css("display","block");
+    }
+ function hiddtable(){
+	 $("#tableinfo").css("display","none");
+ }
+
+$(document).ready(function(){
+	$("#searchTrandeInfo").click(function(){
+		var account = $("#account").val();
+		/*账户验证正则表达式*/
+		var flag1 = true;
+		$(".account-msg").css("display", "block");
+		if(!(account == null || account == "")){
+			if(isNaN(account)){
+				$(".account-msg").text("账户格式有误").css("color","red");
+				flag1 = false;
+			}else {
+				$(".account-msg").css("display", "none");
+			    flag1 = true;	
+			}
+		}
+		return flag1;
+	});
+	
+	$("#searchAccountInfo").click(function(){
+		var searchAccount = $("#searchAccount").val();
+		/*账户验证正则表达式*/
+		var accountvali = /^([1-9]{1})(\d{14}|\d{18})$/;
+		var flag2 = true;
+		hiddtable();
+		$(".searchAccount-msg").css("display", "block");
+		if(searchAccount ==null || searchAccount == ""){
+			$(".searchAccount-msg").text("账户不能为空").css("color","red");
+			flag2 = false;
+		}else if(!accountvali.test(searchAccount)){
+			$(".searchAccount-msg").text("账户格式错误").css("color","red");
+			flag2 = false;
+		}else{
+			checktable();
+			$(".searchAccount-msg").css("display", "none");
+			flag2 = true;	
+		}
+		return flag2;
+	});
+});
