@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.teamone.dao.RoleMapper" >
+
+  <resultMap id="BaseResultMap" type="com.teamone.entity.Role" >
+    <id column="role_id" property="roleId" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <collection property="permissionList" resultMap="PermissionResultMap"/>
+  </resultMap>
+  <resultMap id="PermissionResultMap" type="com.teamone.entity.Permission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="permission" property="permission" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    role_id, role_name, description
+  </sql>
+  <sql id="Permission_Column_List" >
+    id, permission, detail
+  </sql>
+  <select id="getAllRoles" resultMap="BaseResultMap" >
+    SELECT
+    r.role_id,r.role_name,r.description,
+    <include refid="Permission_Column_List" />
+    FROM role r
+    LEFT JOIN role_permission rp ON rp.role_id=r.role_id
+    LEFT JOIN permission p ON p.id = rp.permission_id
+  </select>
+
+<resultMap id="roleNameMap" type="com.teamone.entity.Role" >
+  <id column="role_id" property="roleId" jdbcType="BIGINT" />
+  <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+  <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="getRoleNames" resultMap="roleNameMap">
+    SELECT * FROM role
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT
+    r.role_id,r.role_name,r.description,
+    <include refid="Permission_Column_List" />
+    FROM role r
+    LEFT JOIN role_permission rp ON rp.role_id=r.role_id
+    LEFT JOIN permission p ON p.id = rp.permission_id
+    where r.role_id = #{roleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from role
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.teamone.entity.Role" >
+    insert into role (role_id, role_name, description
+      )
+    values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertRolePermission">
+      INSERT IGNORE INTO role_permission VALUES (#{roleId},#{permissionId})
+  </insert>
+    <delete id="deleteRolePermission">
+    DELETE FROM role_permission WHERE role_id=#{roleId}
+</delete>
+
+  <insert id="insertSelective" parameterType="com.teamone.entity.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.teamone.entity.Role" >
+    update role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.teamone.entity.Role" >
+    update role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where role_id = #{roleId,jdbcType=BIGINT}
+  </update>
+</mapper>

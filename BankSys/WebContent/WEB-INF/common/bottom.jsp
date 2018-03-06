@@ -12,10 +12,5 @@
 	    <li style="list-style:none;"><a href="http://www.miitbeian.gov.cn/" style="color:#8A8A8A;" >粤ICP备17145334号</a></li>
 	  </div>
 	</nav>
-	<!-- <footer>
-	  <ol class="breadcrumb" style="background:#EDEDED;clear:both;text-align:center;z-index:99;position:relative;margin-top:50%">
-	  	<li><a href="http://www.miitbeian.gov.cn/" style="">粤ICP备17145334号</a></li>
-	  </ol>
-	</footer>
 </body>
 </html>
